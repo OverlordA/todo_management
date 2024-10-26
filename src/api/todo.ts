@@ -10,11 +10,30 @@ const getListTodo = async () => {
     }
 }
 
-const updateTodo = () => {
+const userTodos = async (userId: string )=> {
+    try {
+        const { data } = await axiosInstance.get(`/todos?userId=${userId}`);
+        return data;
+    }catch(err){
+        console.error('Select todos error: ', err)
+    }
+}
 
+const updateTodo = (id: number) => {
+
+}
+const getTodo = async (id:string) => {
+    try {
+        const { data } = await axiosInstance.get(`/todos/${id}`);
+        return data;
+    }catch(err){
+        console.error('Select todos error: ', err)
+    }
 }
 
 export {
     getListTodo,
-    updateTodo
+    updateTodo,
+    userTodos,
+    getTodo
 }

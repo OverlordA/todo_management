@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 
 interface ITodoStore {
-    todoList: any [],
+    myTodoList: any [],
 }
 
 interface ITodoAction {
@@ -9,8 +9,8 @@ interface ITodoAction {
 }
 
 export const useTodoStore = create<ITodoStore & ITodoAction>(set => ({
-    todoList:[],
+    myTodoList:[],
     updateTodoList: (todoList: any []) =>
-        set((state: any) => ({...state, userList: todoList})),
+        set((state: any) => ({...state, myTodoList: todoList})),
 
 }));

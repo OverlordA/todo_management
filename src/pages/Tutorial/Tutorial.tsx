@@ -1,27 +1,20 @@
-import {useEffect} from "react";
-import {useUsersStore} from "./store/user";
-import {useLoaderData} from "react-router-dom";
-import Card from 'react-bootstrap/Card';
-import {Col, Container, Row} from "react-bootstrap";
+import {Badge, Button, Col, Container, Row } from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
+const Tutorial = () => {
+    const navigate = useNavigate();
 
+    const toLogin = () => {
+      navigate('/login')
+    }
 
-const Landing = () => {
-
-    const users = useLoaderData();
-
-    const { userList, updateUserList} =
-        useUsersStore();
-
-    useEffect(() => {
-        updateUserList(users as any[])
-    }, [users])
-
-    return   <Container>
+    return <Container>
         <Row>
             <Col xs={3} />
                 <Col xs={6}>
-                    <Card.Title>Welcome to the Todo Management App!</Card.Title>
+                    <h3>
+                        Welcome to the <Badge bg="primary">Todo Management App!</Badge>
+                    </h3>
                 </Col>
             <Col xs={3} />
         </Row>
@@ -49,17 +42,12 @@ const Landing = () => {
                     View Summary: On the Summary page, you can see an overview of todos across all users, with totals for completed and pending tasks.
                 </p>
                 Enjoy staying organized with our app!
+
+                <Button onClick={() => toLogin()}> GO {`>>`} </Button>
             </Col>
             <Col xs={3} />
-        </Row>
-        <Row>
-            <Col>
-                {userList?.length && userList.map(user => {
-                    return <div key={user.name}>{user.name}</div>
-                })  }
-            </Col>
         </Row>
     </Container>
 
 }
-export default Landing
+export default Tutorial

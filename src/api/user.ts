@@ -10,7 +10,17 @@ const getUsers = async () => {
     }
 }
 
+const getUser = async (userId: number) => {
+    try {
+        const { data } = await axiosInstance.get(`/users/${userId}`);
+        return data;
+    }catch(err){
+        console.error('Select users error: ', err)
+    }
+}
+
 
 export {
-    getUsers
+    getUsers,
+    getUser,
 }
