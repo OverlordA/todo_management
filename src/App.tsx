@@ -1,12 +1,17 @@
 import React from 'react';
 import './App.css';
 import AppNavigator from "./nav/AppNavigator";
+import {Container, Row, Col } from "react-bootstrap";
 
 function App() {
   return (
-    <div className="App">
-      <AppNavigator />
-    </div>
+      <Container>
+          <Row>
+              <Col xs={12}>
+                  <AppNavigator />
+              </Col>
+          </Row>
+      </Container>
   );
 }
 
