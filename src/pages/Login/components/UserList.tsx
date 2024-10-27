@@ -11,16 +11,15 @@ const UserList = ({ userList, selectUser }: UserListProps ) => {
         <thead>
         <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
         </tr>
         </thead>
         <tbody>
         {userList?.length && userList.map(user => {
             return  <tr key={user.name} onClick={() => selectUser(user.id)}>
                 <td>{user.id}</td>
-                <td colSpan={2}>{user.name}</td>
+                <td>{user.name}</td>
                 <td>{user.email}</td>
             </tr>
         })}

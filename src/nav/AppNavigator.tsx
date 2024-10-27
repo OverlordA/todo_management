@@ -44,11 +44,18 @@ const router = createBrowserRouter([
     },
     {
         path: '/summary',
-        loader: () => (getUsers()),
         children: [
             {
                 path: ':userId',
-                loader: ({params}) => (userTodos(params.userId as string )),
+                loader: async (): Promise<{ users: any [], todos: any[]}> => {
+                    const users = await getUsers()
+                    const todos = await getListTodo();
+
+                    return {
+                        users: users,
+                        todos: todos,
+                    }
+                },
                 element: <Summary />,
             }
         ]
