@@ -18,7 +18,10 @@ const Summary = () => {
 
     }, [users, todos])
 
-    return <Container>
+    return <Container className="py-5">
+        <h1 className="text-center mb-4">Users list </h1>
+        <p className="text-center mb-4">Look on other user with statistic of finished and progress todo</p>
+
         <Table striped bordered hover>
             <thead>
             <tr>

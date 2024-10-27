@@ -29,17 +29,16 @@ const CreateTodoItem = () => {
 
     }
 
-    return <Container>
-        <Row>
-            <TodoForm
-                title="Create new Todo"
-                submit={create}
-                initValues={{
-                    title: "",
-                }}
-            />
-        </Row>
-    </Container>
+    return <Container className="py-5">
+                <TodoForm
+                    title="Create new Todo Item"
+                    buttonText={'Create'}
+                    submit={create}
+                    initValues={{
+                        title: "",
+                    }}
+                />
+            </Container>
 }
 
 export default CreateTodoItem;

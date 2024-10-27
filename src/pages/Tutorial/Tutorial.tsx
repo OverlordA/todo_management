@@ -1,5 +1,6 @@
-import {Badge, Button, Col, Container, Row } from "react-bootstrap";
+import {Badge, Button, Card, Col, Container, ListGroup, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import {BsArrowRight} from "react-icons/bs";
 
 const Tutorial = () => {
     const navigate = useNavigate();
@@ -7,47 +8,58 @@ const Tutorial = () => {
     const toLogin = () => {
       navigate('/login')
     }
+    return    <Container className="py-5">
+        <div className="text-center">
+            <h1 className="display-4">Welcome to the Todo Management App!</h1>
+            <p className="lead">Follow these simple steps to get started:</p>
+        </div>
 
-    return <Container>
-        <Row>
-            <Col xs={3} />
-                <Col xs={6}>
-                    <h3>
-                        Welcome to the <Badge bg="primary">Todo Management App!</Badge>
-                    </h3>
-                </Col>
-            <Col xs={3} />
-        </Row>
-        <Row>
-            <Col xs={3} />
-            <Col xs={6}>
-                <p>
-                Follow these simple steps to get started:
-                </p>
-                <p>
-                    1 Select a User: From the list, pick a user to log in as. This will allow you to view and manage your personal todo list.
-                </p>
-                <p>
-                    Access Your Todos: Once logged in, you can view all of your tasks on the My Todo page.
-                </p>
+        <Card className="my-4">
+            <Card.Body>
+                <Card.Title>1. Select a User</Card.Title>
+                <Card.Text>
+                    From the list, pick a user to log in as. This will allow you to view and manage your personal todo list.
+                </Card.Text>
+            </Card.Body>
+        </Card>
 
-                <p>
-                    Manage Todos: On the My Todo page, you can:
+        <Card className="my-4">
+            <Card.Body>
+                <Card.Title>2. Access Your Todos</Card.Title>
+                <Card.Text>
+                    Once logged in, you can view all of your tasks on the <strong>My Todo</strong> page.
+                </Card.Text>
+            </Card.Body>
+        </Card>
 
-                </p>
-                <p>
-                    Create new todos to keep track of tasks.
-                    Edit existing todos if you need to make changes.
-                    Delete todos that are no longer needed.
-                    View Summary: On the Summary page, you can see an overview of todos across all users, with totals for completed and pending tasks.
-                </p>
-                Enjoy staying organized with our app!
+        <Card className="my-4">
+            <Card.Body>
+                <Card.Title>3. Manage Todos</Card.Title>
+                <Card.Text>On the <strong>My Todo</strong> page, you can:</Card.Text>
+                <ListGroup variant="flush">
+                    <ListGroup.Item>Create new todos to keep track of tasks.</ListGroup.Item>
+                    <ListGroup.Item>Edit existing todos if you need to make changes.</ListGroup.Item>
+                    <ListGroup.Item>Delete todos that are no longer needed.</ListGroup.Item>
+                </ListGroup>
+            </Card.Body>
+        </Card>
 
-                <Button onClick={() => toLogin()}> GO {`>>`} </Button>
-            </Col>
-            <Col xs={3} />
-        </Row>
+        <Card className="my-4">
+            <Card.Body>
+                <Card.Title>4. View Summary</Card.Title>
+                <Card.Text>
+                    On the <strong>Summary</strong> page, you can see an overview of todos across all users, with totals for completed and pending tasks.
+                </Card.Text>
+            </Card.Body>
+        </Card>
+
+        <div className="text-center my-4">
+            <Button variant="primary" size="lg" onClick={() => toLogin()} >Get Started</Button>
+        </div>
+
+        <footer className="text-center mt-5">
+            <p className="text-muted">Enjoy staying organized with our app!</p>
+        </footer>
     </Container>
-
 }
 export default Tutorial

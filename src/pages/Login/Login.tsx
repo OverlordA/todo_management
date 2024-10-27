@@ -40,22 +40,10 @@ const Login = () => {
         }
     }
 
-    return  <Container>
-            <Row>
-                <Col xs={3} />
-                <Col xs={6} >
-                    {!selectedUser  ?  <h3>Select user for Login </h3> :  <h3>Selected user:  </h3> }
-                </Col>
-                <Col xs={3} />
-            </Row>
-        <Row>
-            <Col xs={3} />
-            <Col xs={6}>
+    return  <div>
                 {!selectedUser && <UserList userList={userList} selectUser={selectUser} /> }
                 {selectedUser && <UserDetail logOut={logOut} />}
-            </Col>
-        </Row>
-    </Container>
+            </div>
 }
 
 export default Login

@@ -1,9 +1,10 @@
 import {Formik} from "formik";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 
 
 type TodoFormProps = {
     title: string,
+    buttonText: string,
     submit: (values: any) => void,
     initValues: {
         title: string,
@@ -11,15 +12,10 @@ type TodoFormProps = {
 }
 
 const TodoForm = (props: TodoFormProps) => {
-    return <Container>
+    return <>
+        <h1 className="text-center mb-4">{props.title}</h1>
         <Row>
-            <Col xs={3}></Col>
-            <Col xs={6}>
-                <h3>{props.title}</h3>
-            </Col>
-            <Col xs={3}></Col>
-        </Row>
-        <Row>
+        <Col className="text-center mb-6">
             <Formik
                 initialValues={props.initValues}
                 //validate={}
@@ -39,36 +35,27 @@ const TodoForm = (props: TodoFormProps) => {
                       /* and other goodies */
                   }) => (
                     <form onSubmit={handleSubmit}>
-                        <Container>
-                            <Row>
-                                <Col xs={3}> </Col>
-                                <Col xs={6}>
-                                    <input
-                                        type="text"
-                                        name="title"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.title}
-                                    />
-                                    {errors.title && touched.title && errors.title}
-                                </Col>
-                                <Col xs={3}> </Col>
-                            </Row>
-                            <Row>
-                                <Col  xs={3}/>
-                                <Col  xs={6}>
-                                    <button type="submit" disabled={isSubmitting}>
-                                        Submit
-                                    </button>
-                                </Col>
-                                <Col  xs={3}/>
-                            </Row>
-                        </Container>
+                        <Form.Group className="mb-4" controlId="todoInput">
+                            <Form.Label className='me-4'>Todo title</Form.Label>
+                            <input
+                                name="title"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.title}
+                                style={{ width: '100%', height: '50px', padding: '10px' }}
+                            />
+                            {errors.title && touched.title && errors.title}
+                        </Form.Group>
+                        <Button variant="primary" type="submit" disabled={isSubmitting}>
+                            {props.buttonText}
+                        </Button>
                     </form>
                 )}
             </Formik>
+        </Col>
+
         </Row>
-    </Container>
+        </>
 }
 
 export default TodoForm

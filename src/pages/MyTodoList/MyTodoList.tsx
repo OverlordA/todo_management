@@ -1,9 +1,11 @@
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
+import {BsFillPencilFill, BsFillPlusSquareFill, BsFillTrashFill, BsPencil, BsPlusCircle, BsTrash} from "react-icons/bs";
 import {useEffect, useState} from "react";
 import {useTodoStore} from "../../store/todo/myTodo";
-import {Button, Table, Modal} from "react-bootstrap";
+import {Button, Table, Modal, Row, Container, Col} from "react-bootstrap";
 import {useUsersStore} from "../../store/user/user";
 import {deleteTodoRequest, userTodos} from "../../api/todo";
+import './myTodo.css';
 
 const MyTodoList= () => {
     const todos = useLoaderData();
@@ -48,62 +50,73 @@ const MyTodoList= () => {
         navigate(`/edit-todo/${id}`)
     }
 
-    return <div>
-       <h3>{selectedUser && selectedUser.name} here you can manipulate your todos
-       <p>
-           X - Delete todo
-           + - Add new one
-           / - Edit todo
-       </p>
-       </h3>
+    return <Container className="py-5">
+        <h1 className="text-center mb-4">My Todo List</h1>
+        <p className="text-center mb-4">Manage your tasks efficiently by adding, editing, or deleting todos.</p>
 
+        <Row className="text-center mb-4">
+            <Col>
+                <BsPencil className="me-2" /> - Edit Todo
+            </Col>
+            <Col>
+                <BsPlusCircle className="me-2" /> - Add New Todo
+            </Col>
+            <Col>
+                    <BsTrash className="me-2" /> - Delete Todo
+            </Col>
+        </Row>
 
         <Table striped bordered hover>
             <thead>
             <tr>
                 <th>#</th>
                 <th>Title</th>
-                <th>Complete</th>
+                <th>Completed</th>
                 <th>Control</th>
             </tr>
             </thead>
             <tbody>
-            {myTodoList?.length > 0 && myTodoList.map(todoItem => {
-                return  <tr key={todoItem.id}>
+            {myTodoList?.length > 0 && myTodoList.map((todoItem: any) => (
+                <tr key={todoItem.id}>
                     <td>{todoItem.id}</td>
                     <td>{todoItem.title}</td>
-                    <td>{todoItem.complete === true ? "DONE" : "TODO"}</td>
-                    <td>
-                        <Button onClick={() => deleteTodo(todoItem.id)}>X</Button>
-                        <Button onClick={() => toCreate()}>+</Button>
-                        <Button onClick={() => editTodoItem(todoItem.id)}>/</Button>
+                    <td>{todoItem.completed ? 'Yes' : 'No'}</td>
+                    <td className={'control_block'}>
+                        <Button variant="primary" size="sm" onClick={() => editTodoItem(todoItem.id)} className="me-2">
+                            <BsPencil />
+                        </Button>
+                        <Button variant="primary" size="sm" className="me-2" onClick={() => toCreate()}>
+                            <BsPlusCircle />
+                        </Button>
+                        <Button variant="danger" size="sm" onClick={() => deleteTodo(todoItem.id)}>
+                            <BsTrash />
+                        </Button>
                     </td>
                 </tr>
-            })}
+            ))}
             </tbody>
         </Table>
-
         {deleteConfirm &&   <div
             className="modal show"
             style={{ display: 'block', position: 'fixed', top: 10, }}
         >
             <Modal.Dialog>
-            <Modal.Header>
-                <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
+                <Modal.Header>
+                    <Modal.Title>Delete todo </Modal.Title>
+                </Modal.Header>
 
-            <Modal.Body>
-                <p>Modal body text goes here.</p>
-            </Modal.Body>
+                <Modal.Body>
+                    <p>Are you sure you want to delete ? </p>
+                </Modal.Body>
 
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setDeleteConfirm(false)}>Cancel</Button>
-                <Button variant="primary" onClick={() => makeDelete()}>Delete</Button>
-            </Modal.Footer>
-        </Modal.Dialog>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setDeleteConfirm(false)}>Cancel</Button>
+                    <Button variant="danger" onClick={() => makeDelete()}>Delete</Button>
+                </Modal.Footer>
+            </Modal.Dialog>
         </div>}
+    </Container>
 
-    </div>
 }
 
 export default MyTodoList;

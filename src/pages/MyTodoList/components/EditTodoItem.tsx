@@ -1,4 +1,4 @@
-import {Container, Row} from "react-bootstrap";
+import {Button, Container, Form, Row} from "react-bootstrap";
 import TodoForm from "./TodoForm";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -39,20 +39,19 @@ const EditTodoItem = () => {
         }
     }
 
-    return<Container>
-        <Row>
-            {
-                editTodoItem &&   <TodoForm
-                    title="Update Todo"
-                    submit={updateTodoItem}
-                    initValues={{
-                        title: editTodoItem.title as string,
-                    }}
-                />
-            }
 
-        </Row>
-    </Container>
+    return   <Container className="py-5">
+                {
+                    editTodoItem &&   <TodoForm
+                        title="Update Your Todo Item"
+                        buttonText={'Update'}
+                        submit={updateTodoItem}
+                        initValues={{
+                            title: editTodoItem.title as string,
+                        }}
+                    />
+                }
+            </Container>
 }
 
 export default EditTodoItem
