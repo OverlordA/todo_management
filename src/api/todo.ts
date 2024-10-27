@@ -37,8 +37,13 @@ const createTodoRequest = async (title: string, userId: string) => {
     }
 }
 
-const updateTodo = (id: number) => {
-
+const updateTodoRequest = async (todoId: string, updateInfo: any ) => {
+    try {
+        const { data } = await axiosInstance.put(`/todos/${todoId}`, { ...updateInfo });
+        return data;
+    }catch(err){
+        console.error('Select todos error: ', err)
+    }
 }
 const getTodo = async (id:string) => {
     try {
@@ -51,7 +56,7 @@ const getTodo = async (id:string) => {
 
 export {
     getListTodo,
-    updateTodo,
+    updateTodoRequest,
     userTodos,
     getTodo,
     deleteTodoRequest,

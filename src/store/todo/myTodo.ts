@@ -8,6 +8,7 @@ interface ITodoAction {
     updateTodoList: (todoList: any []) => void
     deleteTodoFromList: (id: string) => void
     pushNewTodo: (newTodo: any) => void
+    updateTodo: (updatedTodo: any) => void
 }
 
 export const useTodoStore = create<ITodoStore & ITodoAction>(set => ({
@@ -18,5 +19,10 @@ export const useTodoStore = create<ITodoStore & ITodoAction>(set => ({
         set((state: any) => ({...state, myTodoList: todoList})),
     pushNewTodo: (newTodo: any ) =>
         set((state: any) => ({...state, myTodoList: [...state.myTodoList, newTodo]})),
+    updateTodo: (updatedTodo: any ) =>
+        set((state: any) => ({...state, myTodoList: state.myTodoList.map((item: any) => {
+            if(item.id === updatedTodo.id) return updatedTodo
+                return item
+            })})),
 
 }));
