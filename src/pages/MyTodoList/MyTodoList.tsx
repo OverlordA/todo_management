@@ -1,14 +1,16 @@
-import {useLoaderData, useNavigate} from "react-router-dom";
+import {useLoaderData, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useTodoStore} from "../../store/todo/myTodo";
 import {Button, Table, Modal} from "react-bootstrap";
 import {useUsersStore} from "../../store/user/user";
+import {deleteTodoRequest, userTodos} from "../../api/todo";
 
 const MyTodoList= () => {
     const todos = useLoaderData();
+    const { userId } = useParams()
     const [deleteConfirm, setDeleteConfirm] = useState<string |boolean >(false)
 
-    const { myTodoList, updateTodoList} =
+    const { myTodoList, updateTodoList, deleteTodoFromList} =
         useTodoStore();
     const { selectedUser } = useUsersStore()
     const navigate = useNavigate();
@@ -17,10 +19,26 @@ const MyTodoList= () => {
         updateTodoList(todos as any[])
     }, [todos])
 
-    const deleteTodo = (id:string ) => {
+    useEffect(() => {
+        if(userId && myTodoList.length < 0){
+            loadUserTodos(userId)
+        }
+    }, [])
+
+    const loadUserTodos = async (userId: string) => {
+        const todos = await  userTodos(userId)
+        updateTodoList( todos as any[])
+    }
+
+    const deleteTodo = (id:string) => {
         // open delete confirmation dialog
-        console.log('User id to delete ', id)
         setDeleteConfirm(id);
+    }
+
+    const makeDelete = async () => {
+       await deleteTodoRequest(deleteConfirm);
+       deleteTodoFromList(deleteConfirm as string)
+       setDeleteConfirm(false)
     }
 
     const toCreate = () => {
@@ -31,7 +49,7 @@ const MyTodoList= () => {
     }
 
     return <div>
-       <h3>{selectedUser.name} here you can manipulate your todos
+       <h3>{selectedUser && selectedUser.name} here you can manipulate your todos
        <p>
            X - Delete todo
            + - Add new one
@@ -50,7 +68,7 @@ const MyTodoList= () => {
             </tr>
             </thead>
             <tbody>
-            {myTodoList?.length && myTodoList.map(todoItem => {
+            {myTodoList?.length > 0 && myTodoList.map(todoItem => {
                 return  <tr key={todoItem.id}>
                     <td>{todoItem.id}</td>
                     <td>{todoItem.title}</td>
@@ -67,10 +85,10 @@ const MyTodoList= () => {
 
         {deleteConfirm &&   <div
             className="modal show"
-            style={{ display: 'block', position: 'absolute', top: 10, }}
+            style={{ display: 'block', position: 'fixed', top: 10, }}
         >
             <Modal.Dialog>
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Modal title</Modal.Title>
             </Modal.Header>
 
@@ -80,7 +98,7 @@ const MyTodoList= () => {
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setDeleteConfirm(false)}>Cancel</Button>
-                <Button variant="primary">Delete</Button>
+                <Button variant="primary" onClick={() => makeDelete()}>Delete</Button>
             </Modal.Footer>
         </Modal.Dialog>
         </div>}
