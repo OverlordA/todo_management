@@ -28,6 +28,15 @@ const deleteTodoRequest = async (todoId: string | boolean) => {
     }
 }
 
+const createTodoRequest = async (title: string, userId: string) => {
+    try {
+        const { data } = await axiosInstance.post(`/todos`, { title: title, userId, completed: false });
+        return data;
+    }catch(err){
+        console.error('Select todos error: ', err)
+    }
+}
+
 const updateTodo = (id: number) => {
 
 }
@@ -45,5 +54,6 @@ export {
     updateTodo,
     userTodos,
     getTodo,
-    deleteTodoRequest
+    deleteTodoRequest,
+    createTodoRequest
 }
